@@ -1,0 +1,10 @@
+#Define Limit (currently -365) and Specify file path.
+$limit = (Get-Date).AddDays(-365)
+$path = Read-Host -Prompt 'Input File Path'
+
+# Delete files older than the $limit.
+Get-ChildItem -Path $path -Recurse -Force |  Where-Object { !$_.PSIsContainer -and $_.LastWriteTime -lt $limit } | Remove-Item -Force
+
+<#Optional - Delete any empty directories left behind.
+Get-ChildItem -Path $path -Recurse -Force | Where-Object { $_.PSIsContainer -and (Get-ChildItem -Path $_.FullName -Recurse -Force | Where-Object { !$_.PSIsContainer }) -eq $null } | Remove-Item -Force -Recurse
+#>
