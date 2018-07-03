@@ -1,0 +1,25 @@
+$ServiceName = 'Service1','Service2','Service3','Service4','Service5'
+$arrService = Get-Service -Name $ServiceName
+
+foreach($item in $ServiceName)
+
+{
+	$arrService = Get-Service -Name $item
+	write-host "now checking" $item
+  if ($arrService.Status -ne 'Running'){
+	Start-Service $ServiceName
+    write-host $arrService.status
+    write-host 'Service starting'
+    Start-Sleep -seconds 60
+    $arrService.Refresh()
+    if ($arrService.Status -eq 'Running')
+    {
+        Write-Host 'Service is now Running'
+    }
+}
+elseif ($arrService.Status -eq 'Running') 
+	{
+		write-host $item "is running normally."
+	}
+	
+}
