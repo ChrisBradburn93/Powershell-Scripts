@@ -1,0 +1,9 @@
+$ListFile = Read-Host -Prompt "Input Source folder for files required"
+$destination = Read-Host -Prompt "Select destination for files"
+
+
+$filesToMove = get-childitem $ListFile | Out-GridView -OutputMode Multiple
+$filesToMove | % { copy-item $_.FullName $destination}
+
+
+Compress-Archive -Path $destination C:\Users\$env:USERNAME\Desktop\$(get-date -f yyyy-MM-dd)
