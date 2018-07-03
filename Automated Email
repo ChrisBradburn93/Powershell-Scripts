@@ -1,0 +1,19 @@
+PowerShell.exe -windowstyle hidden { 
+
+
+#Create encrypted file first with password. Run first line below, enter password, then run second line after commenting out 1st.
+
+Read-Host -AsSecureString | ConvertFrom-SecureString | Out-File -FilePath C:\scripts\first.last@email.com.securestring
+New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList "first.last@email.com",(Get-Content -Path C:\scripts\first.last@email.com.securestring | ConvertTo-SecureString)
+$ErrorActionPreferance = "STOP"
+$From = "first.last@email.com"
+$To = "first.last@email.com"
+$Cc = "first.last@email.com"
+$Attachment = "C:\Users\File\Path\To\Attachment.PNG"
+$Subject = "Subject"
+$Body = "Yi be ah bi ya yer"
+$SMTPServer = "smtp.provider.com"
+$SMTPPort = "000"
+$Email = "first.last@email.com" 
+Send-MailMessage -From $From -to $To -Cc $Cc -Subject $Subject -Body $Body -SmtpServer $SMTPServer -port $SMTPPort -UseSsl -Credential (New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList "first.last@email.com",(Get-Content -Path first.last@email.com.securestring | ConvertTo-SecureString))  –DeliveryNotificationOption OnSuccess -Attachments $Attachment
+}
