@@ -1,0 +1,27 @@
+$ErrorActionPreferance = "STOP"
+$ServiceName = 'Service','Service2','Service3','Service4','Service5','Service6
+$arrService = Get-Service -Name $ServiceName
+
+foreach($item in $ServiceName)
+
+{
+	$arrService = Get-Service -Name $item
+	write-host "now checking" $item
+  if ($arrService.Status -eq 'Running'){
+	Stop-Service $ServiceName -force
+    write-host $arrService1.status
+    write-host 'Service stopping'
+    Start-Sleep -seconds 60
+    $arrService.Refresh()
+    if ($arrService.Status -ne 'Running')
+    {
+        Write-Host 'Service is not Running'
+    }
+}
+elseif ($arrService.Status -ne 'Running') 
+	{
+		write-host $item "is already stopped."
+	}
+	
+	
+}
